@@ -171,6 +171,23 @@ describe('metalsmith-layouts', function(){
     });
   });
 
+  it('should find partials from layout subdirectories correctly', function(done){
+    var instance = Metalsmith('test/fixtures/partials-layouts-subdirectories')
+      .use(layouts({
+        engine: 'handlebars',
+        layouts: 'layouts',
+        partials: 'layouts/partials',
+        usePartialsAbsolutePath: true
+      }));
+
+    instance.build(function(err){
+      if (err) {
+        return done(err);
+      }
+      equal('test/fixtures/partials-layouts-subdirectories/expected', 'test/fixtures/partials-layouts-subdirectories/build');
+      done();
+    });
+  });
 
   it('should find partials in subdirectories with absolute directory path', function(done){
     var instance = Metalsmith('test/fixtures/partials-subdirectories')
